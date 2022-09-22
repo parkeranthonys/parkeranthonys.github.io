@@ -1,7 +1,121 @@
 <!DOCTYPE html>
 <html>
+
 <body>
-<h1>this</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+    <meta charset="utf-8">
+    <title>Leaflet Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+
+    <style type="text/css">
+        #map {
+            width: 100%;
+            height: 70vh;
+        }
+    </style>
+
+
+
+    <div id="map"></div>
+
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin="">
+        </script>
+
+
+    <style>
+        .buttonMap {
+            font-family: "Avenir Next", sans-serif;
+            border: none;
+            appearance: none;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background-image: linear-gradient(178deg, rgb(224, 97, 102), rgb(224, 97, 102) 10%, rgba(0, 0, 0, .07) 10%, rgba(0, 0, 0, .07) 100%), linear-gradient(rgb(224, 97, 102), rgb(224, 97, 102));
+            background-size: 100% 200%, 100% 100%;
+            background-position: 100% -100%, 100% 100%;
+            background-repeat: no-repeat;
+            transition: background-position .3s cubic-bezier(.215, .61, .355, 1);
+            transform: translateZ(0);
+            width: 100%;
+            position: relative;
+            display: inline-block;
+            line-height: 35px;
+            padding: 0 30px;
+            text-decoration: none;
+            background: rgb(224, 97, 102);
+            color: rgb(255, 255, 255);
+            text-size-adjust: 100%;
+        }
+
+        .storeTitle {
+            font-size: 26px;
+            letter-spacing: -.4px;
+            font-family: "ITC Caslon No 224", serif;
+            font-weight: 500;
+            font-style: normal;
+            text-align: center;
+            line-height: 0rem;
+            padding-top: 0.75rem;
+        }
+
+        .storeInfo {
+            font-family: "Avenir Next", sans-serif;
+            font-size: 11px;
+            padding-top: 0rem;
+            padding-bottom: 0rem;
+            text-align: center;
+        }
+    </style>
+
+
+    <script>
+
+        const map = L.map('map', {
+            center: [26.9, -81],
+            zoom: 7
+        });
+
+        const basicPin = L.icon({
+            iconUrl: 'https://github.com/parkeranthonys/shopifyrepo/blob/main/pinHotPink.png?raw=true',
+            iconSize: [25, 25],
+            popupAnchor: [0, -5],
+        });
+
+        var infoVillages = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">The Villages</p>' +
+                '<p class="storeInfo">341 Colony Boulevard<br>The Villages, FL 32162</p>' +
+                '<a class="storeInfo" href="link">111-111-1111</a>' +
+                '<button class="buttonMap">See More</button>');
+
+        var infoBoynton = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Boynton</p>' +
+                '<button class="buttonMap">See More</button>');
+
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+
+        const villages = L.marker([28.867161, -81.956093], { icon: basicPin })
+            .bindPopup(infoVillages)
+            .addTo(map);
+        const boynton = L.marker([26.512850, -80.120583], { icon: basicPin })
+            .bindPopup(infoBoynton)
+            .addTo(map);
+
+
+    </script>
+
 </body>
+
 </html>
