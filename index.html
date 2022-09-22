@@ -34,16 +34,10 @@
             border: none;
             appearance: none;
             text-align: center;
-            font-size: 10px;
+            font-size: 10.5px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            background-image: linear-gradient(178deg, rgb(224, 97, 102), rgb(224, 97, 102) 10%, rgba(0, 0, 0, .07) 10%, rgba(0, 0, 0, .07) 100%), linear-gradient(rgb(224, 97, 102), rgb(224, 97, 102));
-            background-size: 100% 200%, 100% 100%;
-            background-position: 100% -100%, 100% 100%;
-            background-repeat: no-repeat;
-            transition: background-position .3s cubic-bezier(.215, .61, .355, 1);
-            transform: translateZ(0);
             width: 100%;
             position: relative;
             display: inline-block;
@@ -53,9 +47,14 @@
             background: rgb(224, 97, 102);
             color: rgb(255, 255, 255);
             text-size-adjust: 100%;
+            margin-top: 0.75rem;
+        }
+        .buttonMap:hover{
+            background: rgb(231 120 125);
+            font-size: 10px;
         }
 
-        .storeTitle {
+        p.storeTitle {
             font-size: 26px;
             letter-spacing: -.4px;
             font-family: "ITC Caslon No 224", serif;
@@ -63,15 +62,37 @@
             font-style: normal;
             text-align: center;
             line-height: 0rem;
-            padding-top: 0.75rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-block: 0;
+            margin: 0 1rem 0 1rem;
         }
 
-        .storeInfo {
+        p.storeInfo {
+            font-family: "Avenir Next", sans-serif;
+            font-size: 12px;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            text-align: center;
+            margin: 0 1rem 0 1rem;
+        }
+
+        a.storeLink {
+            display: block;
+            color: rgb(224, 97, 102);
+            text-align: center;
+            text-decoration: none;
             font-family: "Avenir Next", sans-serif;
             font-size: 11px;
-            padding-top: 0rem;
-            padding-bottom: 0rem;
-            text-align: center;
+            line-height: 0.9rem;
+            margin: 0 1rem 0 1rem;
+        }
+        a.storeLink:hover {
+            color: rgb(230, 141, 144);
+            font-size: 11.5px;
+        }
+        a.storeLink:active{
+            color: rgb(230, 141, 144);
         }
     </style>
 
@@ -94,7 +115,7 @@
         })
             .setContent('<p class="storeTitle">The Villages</p>' +
                 '<p class="storeInfo">341 Colony Boulevard<br>The Villages, FL 32162</p>' +
-                '<a class="storeInfo" href="link">111-111-1111</a>' +
+                '<a class="storeLink" href="link">111-111-1111</a>' +
                 '<button class="buttonMap">See More</button>');
 
         var infoBoynton = L.popup({
