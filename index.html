@@ -125,10 +125,10 @@
             color: rgb(230, 141, 144);
         }
 
-        .tab div{
+        div#hours{
             display: none;
         }
-        .tab div:target{
+        div#hours:target{
             display: block;
         }
     </style>
@@ -150,12 +150,12 @@
         var infoVillages = L.popup({
             closeButton: false,
         })
-            .setContent('<div class="storePopup"><p class="storeTitle">The Villages</p>' +
+            .setContent('<p class="storeTitle">The Villages</p>' +
                 '<p class="storeInfo">341 Colony Boulevard<br>The Villages, FL 32162</p>' +
                 '<a class="storeLink" href="tel:3523915174">352-391-5174</a>' +
                 '<div id="hours"><p class="storeInfo">Monday - Friday: 0:00am - 0:00pm<br>Saturday: 3:00pm - 5:00pm</p></div>' +
                 '<a class="buttonMap" href="https://goo.gl/maps/vM5LGyWNLk1Dg4PV6">Get Directions</a>' +
-                '<a class="buttonHours" href="#hours">Store Hours</a></div>');
+                '<a class="buttonHours" href="#hours">Store Hours</a>');
 
         var infoBoynton = L.popup({
             closeButton: false,
