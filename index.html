@@ -42,19 +42,46 @@
             position: relative;
             display: inline-block;
             line-height: 35px;
-            padding: 0 30px;
             text-decoration: none;
             background: rgb(224, 97, 102);
             color: rgb(255, 255, 255);
             text-size-adjust: 100%;
-            margin-top: 0.75rem;
+            margin-top: 1rem;
         }
         a.buttonMap:hover{
             background: rgb(231 120 125);
             font-size: 10px;
         }
-        .buttonMap:active{
+        a.buttonMap:active{
             background: rgb(231 120 125);
+        }
+
+        a.buttonHours {
+            font-family: "Avenir Next", sans-serif;
+            appearance: none;
+            text-align: center;
+            font-size: 10.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            width: 100%;
+            position: relative;
+            display: inline-block;
+            line-height: 35px;
+            text-decoration: none;
+            color: rgb(224, 97, 102);
+            text-size-adjust: 100%;
+            margin-top: 0.5rem;
+            border: 1px solid rgb(224, 97, 102);
+        }
+        a.buttonHours:hover{
+            color: rgb(231 120 125);
+            border-color: rgb(235 154 158);
+            font-size: 10px;
+        }
+        a.buttonHours:active{
+            color: rgb(231 120 125);
+            border-color: rgb(235 154 158);
         }
 
         p.storeTitle {
@@ -120,7 +147,8 @@
                 '<p class="storeInfo">341 Colony Boulevard<br>The Villages, FL 32162</p>' +
                 '<a class="storeLink" href="tel:3523915174">352-391-5174</a>' +
                 '<a class="storeLink" href="mailto:villages@anthonysfla.com">villages@anthonysfla.com</a>' +
-                '<a class="buttonMap" href="https://goo.gl/maps/vM5LGyWNLk1Dg4PV6">Get Directions</a>');
+                '<a class="buttonMap" href="https://goo.gl/maps/vM5LGyWNLk1Dg4PV6">Get Directions</a>' +
+                '<a class="buttonHours" href="/hours">Store Hours</a>');
 
         var infoBoynton = L.popup({
             closeButton: false,
