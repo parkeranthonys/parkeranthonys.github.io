@@ -46,7 +46,7 @@
             background: rgb(224, 97, 102);
             color: rgb(255, 255, 255);
             text-size-adjust: 100%;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
 
         a.buttonMap:hover {
@@ -104,42 +104,178 @@
 
 
     <script>
-
+        // map zoom level and coordinate origin
         const map = L.map('map', {
             center: [26.9, -81],
             zoom: 7
         });
 
+        // store pin icon
         const basicPin = L.icon({
             iconUrl: 'https://github.com/parkeranthonys/shopifyrepo/blob/main/pinHotPink.png?raw=true',
             iconSize: [25, 25],
             popupAnchor: [0, -5],
         });
 
+        // Villages store information 
         var infoVillages = L.popup({
             closeButton: false,
         })
             .setContent('<p class="storeTitle">The Villages</p>' +
                 '<p class="storeInfo">341 Colony Boulevard<br>The Villages, FL 32162</p>' +
                 '<a class="storeLink" href="tel:3523915174">352-391-5174</a>' +
-                '<p class="storeInfo">Monday - Friday: 0:00am - 0:00pm<br>Saturday: 3:00pm - 5:00pm</p>' +
-                '<a class="buttonMap" href="https://goo.gl/maps/vM5LGyWNLk1Dg4PV6">Get Directions</a>');
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/vM5LGyWNLk1Dg4PV6">Get Directions</a>');
+        const Villages = L.marker([28.867161, -81.956093], { icon: basicPin })
+            .bindPopup(infoVillages)
+            .addTo(map);
 
+         // Boynton store information 
         var infoBoynton = L.popup({
             closeButton: false,
         })
-            .setContent('<p class="storeTitle">Boynton</p>' +
-                '<button class="buttonMap">See More</button>');
-
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
-
-        const villages = L.marker([28.867161, -81.956093], { icon: basicPin })
-            .bindPopup(infoVillages)
-            .addTo(map);
-        const boynton = L.marker([26.512850, -80.120583], { icon: basicPin })
+            .setContent('<p class="storeTitle">Boynton Beach</p>' +
+                '<p class="storeInfo">3663 Woolbright Road<br>Boynton Beach, FL 33436</p>' +
+                '<a class="storeLink" href="tel:5617334490">561-733-4490</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/xqKLKfw6mXXAieTTA">Get Directions</a>');
+        const Boynton = L.marker([26.512850, -80.120583], { icon: basicPin })
             .bindPopup(infoBoynton)
             .addTo(map);
+
+        // Stuart store information 
+        var infoStuart = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Stuart</p>' +
+                '<p class="storeInfo">2801 S.E. Ocean Boulevard<br>Stuart, FL 34996</p>' +
+                '<a class="storeLink" href="tel:7722208066">772-220-8066</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/79Mz4Z4uAK5odVD5A">Get Directions</a>');
+        const Stuart = L.marker([27.196819, -80.218498], { icon: basicPin })
+            .bindPopup(infoStuart)
+            .addTo(map);
+
+        // Vero store information 
+        var infoVero = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Vero</p>' +
+                '<p class="storeInfo">636 21st Street<br>Vero Beach, FL 32960</p>' +
+                '<a class="storeLink" href="tel:7725620480">772-562-0480</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/79Mz4Z4uAK5odVD5A">Get Directions</a>');
+        const Vero = L.marker([27.639910, -80.385270], { icon: basicPin })
+            .bindPopup(infoVero)
+            .addTo(map);
+
+        // Key store information 
+        var infoKey = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Key Largo</p>' +
+                '<p class="storeInfo">98200 Overseas Hwy. (M.M. 98)<br>Key Largo, FL 33037</p>' +
+                '<a class="storeLink" href="tel:3058524515">305-852-4515</a>' +
+                '<p class="storeInfo">Monday - Saturday: 9:30am - 5:30pm<br>Sunday: 12:00pm - 5:30pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/LgJenSZ2PibSb6Gk6">Get Directions</a>');
+        const Key = L.marker([25.080290, -80.456130], { icon: basicPin })
+            .bindPopup(infoKey)
+            .addTo(map);
+
+        // Jupiter store information 
+        var infoJupiter = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Jupiter</p>' +
+                '<p class="storeInfo">4300 U.S. Hwy. 1 Suite 209-213<br>Jupiter, FL 33477</p>' +
+                '<a class="storeLink" href="tel:5612779808">561-277-9808</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/VwKg8eHA4NGYP4KYA">Get Directions</a>');
+        const Jupiter = L.marker([26.893290, -80.061510], { icon: basicPin })
+            .bindPopup(infoJupiter)
+            .addTo(map);
+
+        // Marathon store information 
+        var infoMarathon = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Marathon</p>' +
+                '<p class="storeInfo">5800 Overseas Hwy. (M.M. 50)<br>Marathon, FL 33050</p>' +
+                '<a class="storeLink" href="tel:3057435855">305-743-5855</a>' +
+                '<p class="storeInfo">Monday - Saturday: 9:30am - 5:30pm<br>Sunday: 12:00pm - 5:30pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/zdYShuFFzDjDAt9a6">Get Directions</a>');
+        const Marathon = L.marker([24.717970, -81.072490], { icon: basicPin })
+            .bindPopup(infoMarathon)
+            .addTo(map);
+
+        // Bonita store information 
+        var infoBonita = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Bonita Springs</p>' +
+                '<p class="storeInfo">3300 Bonita Beach Road<br>Bonita Springs, FL 34134</p>' +
+                '<a class="storeLink" href="tel:2396767477">239-676-7477</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/XKEXtx5dbTHmyFov6">Get Directions</a>');
+        const Bonita = L.marker([26.330509, -81.813820], { icon: basicPin })
+            .bindPopup(infoBonita)
+            .addTo(map);
+
+        // Myers store information 
+        var infoMyers = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Fort Myers</p>' +
+                '<p class="storeInfo">7091-12 College Parkway<br>Fort Myers, FL 33907</p>' +
+                '<a class="storeLink" href="tel:2392753111">239-275-3111</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/YRKzyuyeoZLS4nso7">Get Directions</a>');
+        const Myers = L.marker([26.555770, -81.873420], { icon: basicPin })
+            .bindPopup(infoMyers)
+            .addTo(map);
+
+        // Punta store information 
+        var infoPunta = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Punta Gorda</p>' +
+                '<p class="storeInfo">615 Cross Street<br>Punta Gorda, FL 33950</p>' +
+                '<a class="storeLink" href="tel:9415052177">941-505-2177</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/SKNQETkrN1hFedUs9">Get Directions</a>');
+        const Punta = L.marker([26.929080, -82.048800], { icon: basicPin })
+            .bindPopup(infoPunta)
+            .addTo(map);
+
+        // Nokomis store information 
+        var infoNokomis = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Nokomis (Venice)</p>' +
+                '<p class="storeInfo">1087 N. Tamiami Trail<br>Nokomis, FL 34275</p>' +
+                '<a class="storeLink" href="tel:9414887643">941-488-7643</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/y5eum24WwukZtVWx8">Get Directions</a>');
+        const Nokomis = L.marker([27.114670, -82.448350], { icon: basicPin })
+            .bindPopup(infoNokomis)
+            .addTo(map);
+
+        // Naples store information 
+        var infoNaples = L.popup({
+            closeButton: false,
+        })
+            .setContent('<p class="storeTitle">Naples South</p>' +
+                '<p class="storeInfo">4919 Rattlesnake Hammock<br>Naples, FL 34113</p>' +
+                '<a class="storeLink" href="tel:2397741010">239-774-1010</a>' +
+                '<p class="storeInfo">Monday - Friday: 10:00am - 7:00pm<br>Saturday: 10:00am - 6:00pm<br>Sunday: 11:00am - 5:00pm</p>' +
+                '<a class="buttonMap" target="_blank" href="https://goo.gl/maps/6btYN9gYRwXcv8s67">Get Directions</a>');
+        const Naples = L.marker([26.108640, -81.746770], { icon: basicPin })
+            .bindPopup(infoNaples)
+            .addTo(map);
+
+
+        // map source and element attribution DO NOT REMOVE
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
 
 
     </script>
