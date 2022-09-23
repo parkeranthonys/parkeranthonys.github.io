@@ -48,11 +48,13 @@
             text-size-adjust: 100%;
             margin-top: 1rem;
         }
-        a.buttonMap:hover{
+
+        a.buttonMap:hover {
             background: rgb(231 120 125);
             font-size: 10px;
         }
-        a.buttonMap:active{
+
+        a.buttonMap:active {
             background: rgb(231 120 125);
         }
 
@@ -74,12 +76,14 @@
             margin-top: 0.5rem;
             border: 1px solid rgb(224, 97, 102);
         }
-        a.buttonHours:hover{
+
+        a.buttonHours:hover {
             color: rgb(231 120 125);
             border-color: rgb(235 154 158);
             font-size: 10px;
         }
-        a.buttonHours:active{
+
+        a.buttonHours:active {
             color: rgb(231 120 125);
             border-color: rgb(235 154 158);
         }
@@ -117,18 +121,21 @@
             line-height: 0.9rem;
             margin: 0 1rem 0 1rem;
         }
+
         a.storeLink:hover {
             color: rgb(230, 141, 144);
             font-size: 11px;
         }
-        a.storeLink:active{
+
+        a.storeLink:active {
             color: rgb(230, 141, 144);
         }
 
-        div#hours{
+        div#hours {
             display: none;
         }
-        div#hours:target{
+
+        div#hours:target {
             display: block;
         }
     </style>
@@ -153,7 +160,6 @@
             .setContent('<p class="storeTitle">The Villages</p>' +
                 '<p class="storeInfo">341 Colony Boulevard<br>The Villages, FL 32162</p>' +
                 '<a class="storeLink" href="tel:3523915174">352-391-5174</a>' +
-                '<div id="hours"><p class="storeInfo">Monday - Friday: 0:00am - 0:00pm<br>Saturday: 3:00pm - 5:00pm</p></div>' +
                 '<a class="buttonMap" href="https://goo.gl/maps/vM5LGyWNLk1Dg4PV6">Get Directions</a>' +
                 '<a class="buttonHours" href="#hours">Store Hours</a>');
 
@@ -173,7 +179,83 @@
             .bindPopup(infoBoynton)
             .addTo(map);
 
+    </script>
 
+    <div class="popup" onclick="myFunction()">
+        <span class="popuptext" id="myPopup">Monday - Friday: 0:00am - 0:00pm<br>Saturday: 3:00pm - 5:00pm</span>
+    </div>
+
+    <style>
+        /* Popup container */
+        .popup {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        /* The actual popup (appears on top) */
+        .popup .popuptext {
+            visibility: hidden;
+            width: 160px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -80px;
+        }
+
+        /* Popup arrow */
+        .popup .popuptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Toggle this class when clicking on the popup container (hide and show the popup) */
+        .popup .show {
+            visibility: visible;
+            -webkit-animation: fadeIn 1s;
+            animation: fadeIn 1s
+        }
+
+        /* Add animation (fade in the popup) */
+        @-webkit-keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <script>
+        // When the user clicks on <div>, open the popup
+        function myFunction() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
     </script>
 
 </body>
