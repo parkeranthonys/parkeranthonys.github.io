@@ -19,17 +19,13 @@
 
 
 
-    <div id="map">
-        <div id="hours">
-            <p class="storeInfo">HOURS LINE 1 AHHAHH<br>LINE TWO??!!!!!!!!</p>
-        </div>
-    </div>
+    <div id="map"></div>
 
 
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin="">
-    </script>
+        </script>
 
 
     <style>
@@ -52,11 +48,13 @@
             text-size-adjust: 100%;
             margin-top: 1rem;
         }
-        a.buttonMap:hover{
+
+        a.buttonMap:hover {
             background: rgb(231 120 125);
             font-size: 10px;
         }
-        a.buttonMap:active{
+
+        a.buttonMap:active {
             background: rgb(231 120 125);
         }
 
@@ -78,12 +76,14 @@
             margin-top: 0.5rem;
             border: 1px solid rgb(224, 97, 102);
         }
-        a.buttonHours:hover{
+
+        a.buttonHours:hover {
             color: rgb(231 120 125);
             border-color: rgb(235 154 158);
             font-size: 10px;
         }
-        a.buttonHours:active{
+
+        a.buttonHours:active {
             color: rgb(231 120 125);
             border-color: rgb(235 154 158);
         }
@@ -121,33 +121,27 @@
             line-height: 0.9rem;
             margin: 0 1rem 0 1rem;
         }
+
         a.storeLink:hover {
             color: rgb(230, 141, 144);
             font-size: 11px;
         }
-        a.storeLink:active{
+
+        a.storeLink:active {
             color: rgb(230, 141, 144);
         }
 
-        div#hours{
+        div#hours {
             display: none;
         }
-        div#hours:target{
+
+        div#hours:target {
             display: block;
         }
     </style>
 
 
     <script>
-
-        function popInfoDisplay(){
-            var x = document.getElementById("hours");
-            if (x.style.display === "none"){
-                x.style.display = "block";
-            } else{
-                x.style.display = "none";
-            }
-        }
 
         const map = L.map('map', {
             center: [26.9, -81],
@@ -166,8 +160,9 @@
             .setContent('<p class="storeTitle">The Villages</p>' +
                 '<p class="storeInfo">341 Colony Boulevard<br>The Villages, FL 32162</p>' +
                 '<a class="storeLink" href="tel:3523915174">352-391-5174</a>' +
+                '<div id="hours"><p class="storeInfo">Monday - Friday: 0:00am - 0:00pm<br>Saturday: 3:00pm - 5:00pm</p></div>' +
                 '<a class="buttonMap" href="https://goo.gl/maps/vM5LGyWNLk1Dg4PV6">Get Directions</a>' +
-                '<a class="buttonHours" onclick="popInfoDisplay()">Store Hours</a>');
+                '<a class="buttonHours" href="#hours">Store Hours</a>');
 
         var infoBoynton = L.popup({
             closeButton: false,
@@ -184,6 +179,7 @@
         const boynton = L.marker([26.512850, -80.120583], { icon: basicPin })
             .bindPopup(infoBoynton)
             .addTo(map);
+
 
     </script>
 
