@@ -19,6 +19,12 @@ config = {
     :discount_type  => '%',
     :message => 'Take 25% Off Select Regular Priced Bottoms!'
   },
+  :sale_collection3 => {
+    :collection_id  => '269140557896',
+    :discount       => 25.00,
+    :discount_type  => '%',
+    :message => 'Take 25% Off Select Regular Priced Bottoms!'
+  },
   :coupons => {
     :collection_id  => '268298518600',
     :discounts     => [25, 25, 25],
@@ -151,6 +157,50 @@ if salecol2_items.size > 0
         end
       end
     end
+end
+
+
+
+
+# grab sale collection3 items (but not items previously discounted in sale collection1)
+salecol3_items = Input.cart.line_items.select do |line_item|
+  !line_item.line_price_changed? && line_item.properties['_collection_ids'] && line_item.properties['_collection_ids'].split(',').include?(config[:sale_collection3][:collection_id])
+end
+
+# discount elligible sale collection3 items
+if salecol3_items.size > 0
+
+# SALE COLLECTION 3 DISCOUNT FILTERING CONFIG
+# true will exclude all sale/clear items in collection from being discounted
+excludeReduced = true
+# true will exclude products by vendors listed between the brackets from being discounted
+useExcludeVendors = false
+excludeVendors = []
+# true will only include products by vendors listed between the brackets 
+useIncludeVendors = false
+includeVendors =[]
+# true will only include products with ANY tag listed between the brackets 
+useIncludeTags = true
+includeTags = ["BOTTOMS"]
+# true will exclude products with tags listed between the brackets from being discounted
+useExcludeTags = false
+excludeTags = []
+
+  salecol3_items.each do |line_item|
+    product = line_item.variant.product
+    if (excludeReduced && (product.product_type != "SALE") && (product.product_type != "CLEAR")) || !excludeReduced
+      if (useExcludeVendors && !excludeVendors.include?(product.vendor)) || !useExcludeVendors
+        if (useIncludeVendors && includeVendors.include?(product.vendor)) || !useIncludeVendors
+          if (useExcludeTags && (product.tags & excludeTags).empty?) || !useExcludeTags
+            if (useIncludeTags && !(product.tags & includeTags).empty?) || !useIncludeTags
+              discount = getDiscount(line_item, config[:sale_collection3][:discount_type], config[:sale_collection3][:discount])
+              line_item.change_line_price(line_item.line_price - discount, message: config[:sale_collection3][:message])
+            end
+          end
+        end
+      end
+    end
+  end
 end
 
 
