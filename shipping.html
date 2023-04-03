@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<script src="https://kit.fontawesome.com/f5fb4ad8f6.js" crossorigin="anonymous"></script>
+
+<style>
+    /* Tooltip container */
+    .tooltip {
+        position: relative;
+        padding-left: 10px;
+        display: inline-block;
+        vertical-align: -5%;
+    }
+
+    /* Tooltip text */
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 300px;
+        background-color: rgb(224, 62, 83);
+        color: rgb(255, 255, 255);
+        text-align: center;
+        font-size:14px;
+        font-weight:normal;
+        font-family: var(--text-font-family);
+        padding: 15px;
+        border-radius: 6px;
+        top: 150%;
+        left: 50%;
+        margin-left: -150px;
+        /* Use half of the width (120/2 = 60), to center the tooltip */
+
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        z-index: 1;
+    }
+
+    /* Show the tooltip text when you mouse over the tooltip container */
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+    .inlineH {
+        display: inline-block;
+    }
+
+    .form-shipping {
+        display: inline-block;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+    .column {
+        float: left;
+        width:30%;
+        flex:auto;
+        padding-top: 10px;
+    }
+
+    @media screen and (max-width: 600px) {
+        .column {
+            width: 100%;
+            flex:auto;
+
+        }
+    }
+
+    .row {
+        column-gap: 5%;
+        flex-wrap:wrap;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    .content{
+        padding: 15px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function calcShip() {
+        var shipDrop = document.getElementById("select-orderday");
+        var shipTwo = document.getElementById("textTwo");
+        var shipThree = document.getElementById("textThree");
+
+        if (shipDrop.value == "monday") {
+            document.getElementById("textTwo").textContent = "Wednesday";
+            document.getElementById("textThree").textContent = "Thursday";
+            document.getElementById("textTwo").style.fontStyle = "normal";
+            document.getElementById("textThree").style.fontStyle = "normal";
+        } else if (shipDrop.value == "tuesday") {
+            document.getElementById("textTwo").textContent = "Thursday";
+            document.getElementById("textThree").textContent = "Friday";
+            document.getElementById("textTwo").style.fontStyle = "normal";
+            document.getElementById("textThree").style.fontStyle = "normal";
+        } else if (shipDrop.value == "wednesday") {
+            document.getElementById("textTwo").textContent = "Friday";
+            document.getElementById("textThree").textContent = "Monday";
+            document.getElementById("textTwo").style.fontStyle = "normal";
+            document.getElementById("textThree").style.fontStyle = "normal";
+        } else if (shipDrop.value == "thursday") {
+            document.getElementById("textTwo").textContent = "Monday";
+            document.getElementById("textThree").textContent = "Tuesday";
+            document.getElementById("textTwo").style.fontStyle = "normal";
+            document.getElementById("textThree").style.fontStyle = "normal";
+        } else if (shipDrop.value == "friday") {
+            document.getElementById("textTwo").textContent = "Tuesday";
+            document.getElementById("textThree").textContent = "Wednesday";
+            document.getElementById("textTwo").style.fontStyle = "normal";
+            document.getElementById("textThree").style.fontStyle = "normal";
+        } else if (shipDrop.value == "saturday") {
+            document.getElementById("textTwo").textContent = "Wednesday";
+            document.getElementById("textThree").textContent = "Thursday";
+            document.getElementById("textTwo").style.fontStyle = "normal";
+            document.getElementById("textThree").style.fontStyle = "normal";
+        } else if (shipDrop.value == "sunday") {
+            document.getElementById("textTwo").textContent = "Wednesday";
+            document.getElementById("textThree").textContent = "Thursday";
+            document.getElementById("textTwo").style.fontStyle = "normal";
+            document.getElementById("textThree").style.fontStyle = "normal";
+        } else {
+            document.getElementById("textTwo").textContent = "Please select order day";
+            document.getElementById("textThree").textContent = "Please select order day";
+            document.getElementById("textTwo").style.fontStyle = "italic";
+            document.getElementById("textThree").style.fontStyle = "italic";
+        }
+
+    }
+
+</script>
+<div class="content">
+<div class="row" style="display: flex;">
+
+    <div class="column">
+        <h5 class="inlineH">Day of Order<div class="tooltip"><i class="fa-solid fa-circle-info fa-sm"></i>
+                <span class="tooltiptext">If you plan to place an order after 3pm EST, please select the day AFTER the order is to be placed in order to receive an accurate estimate.</span>
+            </div>
+        </h5>
+        <p>
+            <select class="form-shipping" id="select-orderday" onchange="calcShip()">
+                <option value="none"></option>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+                <option value="saturday">Saturday</option>
+                <option value="sunday">Sunday</option>
+            </select>
+        </p>
+    </div>
+    <div class="column">
+        <h5>With 2 Business Day Delivery</h5>
+        <p class="daytext" id="textTwo"><i>Please select order day</i></p>
+    </div>
+    <div class="column">
+        <h5>With 3 Business Day Delivery</h5>
+        <p class="daytext" id="textThree"><i>Please select order day</i></p>
+    </div>
+</div>
+</div>
+
+
+</html>

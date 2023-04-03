@@ -1,0 +1,140 @@
+debug_mode = false
+
+
+# sale collection discount will have the same discount applied to all products
+# coupons discount will be applied to products in order from most expensive to least expensive
+# Products in both collections will be discounted as a sale collection product, not a coupons product
+# coupons should be unique to each discount, otherwise, multiple of the same product that are discounted seperately will appear as one item in the cart
+
+config = {
+    :sale_collection => {
+    :collection_id  => '269140394056',
+    :discount       => 25.00,
+    :discount_type  => '%',
+    :message => 'Take 25% Off Select Regular Priced Swim + Sweaters!'
+  },
+  :coupons => {
+    :collection_id  => '268298518600',
+    :discounts     => [25, 25, 25],
+    :messages      => ['Take 25% Off 3 Regular Price Items - Exclusions Apply!', 'Take 25% Off 3 Regular Price Items - Exclusions Apply!', 'Take 25% Off 3 Regular Price Items - Exclusions Apply!'],
+    :discount_type => '%'
+  },
+}
+
+
+# SALE COLLECTION DISCOUNT FILTERING CONFIG
+# true will exclude all sale/clear items in collection from being discounted
+excludeReduced = true
+# true will exclude products by vendors listed between the brackets from being discounted
+useExcludeVendors = true
+excludeVendors = ["AVALIN"]
+# true will only include products by vendors listed between the brackets 
+useIncludeVendors = false
+includeVendors =[]
+# true will only include products with ANY tag listed between the brackets 
+useIncludeTags = false
+includeTags = []
+# true will exclude products with tags listed between the brackets from being discounted
+useExcludeTags = false
+excludeTags = []
+
+
+def setup_test(cart)
+	cart.line_items[0].change_properties({
+		'_collection_ids' => '366153542,2625798165',
+	},
+		message: 'Changing properties for testing',
+	)
+	cart.line_items[1].change_properties({
+		'_collection_ids' => '366153542,2521694229',
+	}, 
+	  message: 'Changing properties for testing',
+	)
+	cart.line_items[2].change_properties({
+		'_collection_ids' => '366153542,2521694229',
+	},
+		message: 'Changing properties for testing',
+	)
+end
+
+if debug_mode
+  setup_test(Input.cart);
+end
+
+def getDiscount(line_item, discount_type, discount_amount) 
+    if discount_type == '%'
+      calculated_discount_amount = line_item.line_price * (discount_amount / 100)
+    else
+      calculated_discount_amount = (Money.new(cents: discount_amount * 100)) * line_item.quantity
+    end
+    return calculated_discount_amount
+end
+
+# grab sale collection items
+salecol_items = Input.cart.line_items.select do |line_item|
+    line_item.properties['_collection_ids'] && line_item.properties['_collection_ids'].split(',').include?(config[:sale_collection][:collection_id])
+end
+
+# discount elligible sale collection items
+if salecol_items.size > 0
+    salecol_items.each do |line_item|
+        product = line_item.variant.product
+        if (excludeReduced && (product.product_type != "SALE") && (product.product_type != "CLEAR")) || !excludeReduced
+          if (useExcludeVendors && !excludeVendors.include?(product.vendor)) || !useExcludeVendors
+            if (useIncludeVendors && includeVendors.include?(product.vendor)) || !useIncludeVendors
+              if (useExcludeTags && (product.tags & excludeTags).empty?) || !useExcludeTags
+                if (useIncludeTags && !(product.tags & includeTags).empty?) || !useIncludeTags
+                  discount = getDiscount(line_item, config[:sale_collection][:discount_type], config[:sale_collection][:discount])
+                  line_item.change_line_price(line_item.line_price - discount, message: config[:sale_collection][:message])
+                end
+              end
+            end
+          end
+        end
+    end
+end
+
+# grab coupon items (but not items previously discounted in sale collection)
+coupon_items = Input.cart.line_items.select do |line_item|
+    !line_item.line_price_changed? && line_item.properties['_collection_ids'] && line_item.properties['_collection_ids'].split(',').include?(config[:coupons][:collection_id])
+  end
+  
+  if coupon_items.size > 0 
+    # discount is applied from most expensive to least expensive
+    coupon_items = coupon_items.sort_by { |li| -li.variant.price }
+    
+    # keep track of how many items to discount 
+    # line items with multiple quantities will be split and discounted individually
+    count = 0
+    discounts_available = config[:coupons][:discounts].size
+    coupon_items.each do |line_item|
+      if count >= discounts_available
+        break
+      end
+      if line_item.quantity > 1
+          new_item = line_item.split(take: 1)
+          discount = getDiscount(new_item, config[:coupons][:discount_type], config[:coupons][:discounts][count]) 
+          new_item.change_line_price(new_item.line_price - discount, message: config[:coupons][:messages][count])
+        	# unshift sends the item to the beginning of the array, so that if we've pulled out 1 item from a 3 item LI, next loop we're dealing with the 2 item LI
+          coupon_items.unshift(new_item)
+          Input.cart.line_items.insert(Input.cart.line_items.find_index(line_item), new_item)
+          count = count + 1
+      else
+        discount = getDiscount(line_item, config[:coupons][:discount_type], config[:coupons][:discounts][count]) 
+        line_item.change_line_price(line_item.line_price - discount, message: config[:coupons][:messages][count])
+        count = count + 1
+      end
+    end
+  end
+
+  Input.cart.line_items.each do | li |
+    product = li.variant.product
+    if product.product_type != "E-Gift Card"
+      li.change_properties({},
+        message: 'Remove properties',
+      )
+    end
+end
+
+coupon_items = []
+Output.cart = Input.cart
