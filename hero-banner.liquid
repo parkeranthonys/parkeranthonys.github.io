@@ -1,0 +1,353 @@
+
+<style>
+    .banner-desktop-inner {
+      flex: 0 0 auto;
+      width: 100%;
+      bottom: 0px;
+      display: flex;
+      padding: 40px;
+      position: absolute;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .banner-mobile-inner {
+        flex: 0 0 auto;
+        width: 100%;
+        height:100%;
+        bottom: 0px;
+        display: none;
+        padding: 30px;
+        position: absolute;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+    .banner-desktop-text {
+      font-style: italic;
+      text-align: right;
+      font-family: Spectral;
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: 1px;
+      text-shadow:rgba(0, 0, 0, 0.5) 0px 0px 10px;
+    }
+    .banner-desktop-shopbutton {
+      flex: 0 0 auto;
+      width: 12vw;
+      height: 12vw;
+      display: flex;
+      align-items: center;
+      border-radius: 100%;
+      justify-content: center;
+      box-shadow:0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    }
+    .banner-desktop-shopborder {
+      flex: 0 0 auto;
+      width: 90%;
+      height: 90%;
+      display: flex;
+      align-items: center;
+      border-width: 3.5px;
+      border-radius: 100%;
+      border-color: #000;
+      justify-content: center;
+      border-style:solid;
+    }
+    .banner-desktop-shoptext {
+      font-size: 2.4vw;
+      margin-top: 3px!important;
+      text-align: center;
+      font-family: Spectral;
+      line-height: 1;
+    }
+
+    @media(max-width: 1000px) {
+        .banner-desktop-inner {
+            display: none;
+          }
+          .banner-mobile-inner {
+            display: flex;
+          }
+          .banner-desktop-shopbutton {
+            width: 25vw;
+            height: 25vw;
+          }
+          .banner-desktop-shoptext {
+            font-size: 5vw;
+          }
+          .banner-desktop-text {
+            text-align: center;
+            line-height:1;
+            text-shadow:none;
+          }
+    }
+  </style>
+
+
+
+<section class="section section--flush">
+    <div class="slideshow__slide-list">
+      {%- for block in section.blocks -%}
+
+        {%- assign image = block.settings.image -%}
+        {%- assign mobile_image = block.settings.mobile_image -%}
+        {%- assign image_aspect_ratio = image.aspect_ratio | default: 2.63 -%}
+
+        {%- if forloop.index > 2 -%}
+            {%- assign loading_attribute_value = 'lazy' -%}
+            {%- assign preload_image = false -%}
+        {%- else -%}
+            {%- assign loading_attribute_value = 'eager' -%}
+            {%- assign preload_image = true -%}
+        {%- endif -%}
+
+
+        {%- capture slide_content -%}
+
+        <div class="slideshow__image-wrapper {% if mobile_image != blank %}hidden-pocket{% endif %}">
+
+            {%- if image != blank -%}
+                {%- capture sizes_attributes -%}100vw{%- endcapture -%}
+                {{- image | image_url: width: 3000 | image_tag: loading: loading_attribute_value, draggable: false, class: 'slideshow__image', sizes: sizes_attribute, widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000', preload: preload_image -}}
+            {%- endif -%}
+
+        </div>
+
+        {%- if mobile_image != blank -%}
+            <div class="slideshow__image-wrapper hidden-lap-and-up">
+              {{- mobile_image | image_url: width: 3000 | image_tag: loading: loading_attribute_value, draggable: false, class: 'slideshow__image', sizes: '100vw', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000', preload: preload_image -}}
+            </div>
+          {%- endif -%}
+
+        {%- capture section_content -%}
+
+            {%- capture shadowrgba -%}{%- render 'color_to_rgba', color:{{block.settings.shadowcolor}}, opacity:{{block.settings.shadowopacity}} -%}{%- endcapture -%}
+
+            {%- if mobile_image != blank -%}
+                <div class="banner-desktop-inner">            
+                    <div class="banner-desktop-shopbutton" style="background-color:{{block.settings.buttonbgcolor}};box-shadow:0px 0px 10px {{shadowrgba}};">
+                        <div class="banner-desktop-shopborder" style="border-color:{{block.settings.buttoncolor}};">
+                        <h2 class="banner-desktop-shoptext" style="color:{{block.settings.buttoncolor}};">
+                            <span>SHOP</span>
+                            <br />
+                            <span>NOW</span>
+                        </h2>
+                        </div>
+                    </div>
+                    
+                    <h1 class="banner-desktop-text" style="color: {{block.settings.headingcolor}};text-shadow:0px 0px 10px {{shadowrgba}};">
+                        {%- if block.settings.heading1 != blank -%}
+                            <span style="font-size:7vw;">
+                            {{ block.settings.heading1 | escape }}
+                            </span>
+                        {%- endif -%}
+                        {%- if block.settings.heading2 != blank -%}
+                            <br>
+                            <span style="font-size:4.5vw;">
+                            {{ block.settings.heading2 | escape }}
+                            </span>
+                        {%- endif -%}
+                    </h1>
+                </div>
+
+                <div class="banner-mobile-inner">
+                    <div class="banner-desktop-shopbutton" style="background-color:{{block.settings.buttonbgcolor}};box-shadow:0px 0px 10px {{shadowrgba}};">
+                        <div class="banner-desktop-shopborder" style="border-color:{{block.settings.buttoncolor}};">
+                        <h2 class="banner-desktop-shoptext" style="color:{{block.settings.buttoncolor}};">
+                            <span>SHOP</span>
+                            <br />
+                            <span>NOW</span>
+                        </h2>
+                        </div>
+                    </div>
+                    
+                    <h1 class="banner-desktop-text" style="color: {{block.settings.buttoncolor}}">
+                        {%- if block.settings.heading1 != blank -%}
+                            <span style="font-size:10vw;">
+                            {{ block.settings.heading1 | escape }}
+                            </span>
+                        {%- endif -%}
+                        {%- if block.settings.heading2 != blank -%}
+                            <br>
+                            <span style="font-size:6vw;">
+                            {{ block.settings.heading2 | escape }}
+                            </span>
+                        {%- endif -%}
+                    </h1>
+                </div>
+
+            {%- else -%}
+
+                <div class="banner-desktop-inner">
+                                
+                    <div class="banner-desktop-shopbutton" style="background-color:{{block.settings.buttonbgcolor}};box-shadow:0px 0px 10px {{shadowrgba}};">
+                        <div class="banner-desktop-shopborder" style="border-color:{{block.settings.buttoncolor}};">
+                        <h2 class="banner-desktop-shoptext" style="color:{{block.settings.buttoncolor}};">
+                            <span>SHOP</span>
+                            <br />
+                            <span>NOW</span>
+                        </h2>
+                        </div>
+                    </div>
+                    
+                    <h1 class="banner-desktop-text" style="color: {{block.settings.headingcolor}};text-shadow:0px 0px 10px {{shadowrgba}};">
+                        {%- if block.settings.heading1 != blank -%}
+                            <span style="font-size:7vw;">
+                            {{ block.settings.heading1 | escape }}
+                            </span>
+                        {%- endif -%}
+                        {%- if block.settings.heading2 != blank -%}
+                            <br>
+                            <span style="font-size:4.5vw;">
+                            {{ block.settings.heading2 | escape }}
+                            </span>
+                        {%- endif -%}
+                    </h1>
+
+                </div>
+
+            {%- endif -%}
+          
+
+        {%- endcapture -%}
+
+        {%- if section_content != blank -%}
+            <div class="container" style="padding:0;max-width:none;">
+              <div class="slideshow__text-wrapper vertical-breather">
+                  {{- section_content -}}
+              </div>
+            </div>
+        {%- endif -%}
+
+        {%- endcapture -%}
+
+        {%- capture slide_attributes -%}
+          {{ block.shopify_attributes }}
+          id="block-{{ section.id }}-{{ block.id }}"
+          class="slideshow__slide"
+          {% unless forloop.first %}hidden{% endunless %}
+            style="--image-aspect-ratio: {{ image_aspect_ratio }}; --mobile-image-aspect-ratio: {{ mobile_image.aspect_ratio | default: image_aspect_ratio | default: 1 }};"
+        {%- endcapture -%}
+
+        <slide-show-item {{ slide_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a class="slideshow__slide-inner" href="{{ block.settings.link }}">
+              {{- slide_content -}}
+            </a>
+          {%- else -%}
+            <div class="slideshow__slide-inner">
+              {{- slide_content -}}
+            </div>
+          {%- endif -%}
+        </slide-show-item>
+
+      {%- endfor -%}
+    </div>
+  </section>
+  
+  {% schema %}
+  {
+    "name": "Hero Banner",
+    "class": "shopify-section--slideshow",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto rotate between slides",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "cycle_speed",
+            "min": 4,
+            "max": 20,
+            "step": 1,
+            "unit": "sec",
+            "label": "Change slides every",
+            "default": 13
+        }
+    ],
+    "blocks":[
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                  "type": "image_picker",
+                  "id": "mobile_image",
+                  "label": "Mobile image"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                },
+                {
+                  "type": "header",
+                  "content": "Content"
+                },
+                {
+                    "type": "text",
+                    "id": "heading1",
+                    "label": "Heading (Line 1)",
+                    "default": "Budding Styles"
+                },
+                {
+                    "type": "text",
+                    "id": "heading2",
+                    "label": "Heading (Line 2)",
+                    "default": "For Your Summer Season..."
+                },
+                {
+                    "type": "color",
+                    "id": "headingcolor",
+                    "label": "Heading Color",
+                    "default": "#ffffff"
+                },
+                
+                {
+                    "type": "color",
+                    "id": "buttonbgcolor",
+                    "label": "Button Color",
+                    "default": "#ffffff"
+                },
+                {
+                    "type": "color",
+                    "id": "buttoncolor",
+                    "label": "Button Accent Color",
+                    "default": "#000000"
+                },
+                {
+                    "type": "color",
+                    "id": "shadowcolor",
+                    "label": "Shadow Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "shadowopacity",
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1,
+                    "label": "Shadow Strength",
+                    "default": 0.5
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+          "name": "Hero Banner",
+          "blocks": [
+            {
+              "type": "image"
+            }
+          ]
+        }
+      ]
+  }
+  {% endschema %}
